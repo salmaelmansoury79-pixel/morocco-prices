@@ -2,7 +2,7 @@
 
 An interactive dashboard and a small pandas analysis on inflation, food versus non-food prices, and the 2026 diesel increase in Morocco.
 
-**Live dashboard:** https://salmaelmansoury79.github.io/morocco-prices/
+**Live dashboard:** https://salmaelmansoury79-pixel.github.io/morocco-prices/
 
 ## Question
 
