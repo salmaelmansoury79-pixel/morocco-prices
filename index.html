@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where does your money go?</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f1ec;--ink:#14213d;--blue:#1d3fbb;--sun:#f2a900;--mint:#1f8a70;--red:#d64045;--card:#ffffff;--mut:#5b6478;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1426;--ink:#eef1fa;--blue:#6f8cff;--sun:#ffc640;--mint:#4fcfaa;--red:#ff7378;--card:#18203a;--mut:#9aa5c4}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.5}
+main{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:clamp(2.4rem,9vw,4.6rem);line-height:.95;margin:0 0 14px;font-weight:800;letter-spacing:-.03em}
+h1 span{display:inline-block;background:var(--sun);color:#14213d;padding:0 .18em;transform:rotate(-2deg);border-radius:6px}
+.lead{max-width:56ch;color:var(--mut);font-size:1.05rem;margin:0 0 34px}
+h2{font-size:1.5rem;margin:44px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--mut);margin:0 0 18px;max-width:60ch}
+.legend{display:flex;gap:16px;font-size:.9rem;margin-bottom:10px;color:var(--mut)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.pump{display:flex;align-items:flex-end;gap:8px;height:240px;border-bottom:3px solid var(--ink);padding:0 4px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:0}
+.col:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.col .fill{width:100%;border-radius:8px 8px 0 0;background:var(--blue);height:0;transition:height 1s cubic-bezier(.2,.8,.2,1)}
+.col.hi .fill{background:var(--sun)}
+.col b{font-size:.95rem;margin-bottom:4px}.col small{color:var(--mut);font-size:.72rem;margin:4px 0}
+.row{display:grid;grid-template-columns:96px 1fr 64px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed color-mix(in srgb,var(--ink) 20%,transparent);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;color:inherit;font:inherit;text-align:left}
+.row:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.name{font-weight:700}
+.bars{display:flex;flex-direction:column;gap:4px}
+.bar{height:11px;border-radius:0 6px 6px 0;width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.b20{background:var(--blue);opacity:.55}.b26{background:var(--sun)}
+.pct{font-weight:800;text-align:right}
+.up{color:var(--red)}.flat{color:var(--mint)}
+.detail{margin-top:14px;padding:14px 16px;background:var(--card);border-left:6px solid var(--sun);border-radius:4px;min-height:3.4em}
+.tag{display:inline-block;position:relative;background:var(--card);border:2px solid var(--ink);border-radius:4px 14px 14px 4px;padding:18px 20px 16px 38px;margin-top:6px}
+.tag:before{content:"";position:absolute;left:12px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;border:2px solid var(--ink);background:var(--bg)}
+.crow{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;padding:8px 0;width:100%;background:none;border:0;border-bottom:1px dashed color-mix(in srgb,var(--ink) 20%,transparent);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.crow:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.cb{display:flex;align-items:center;gap:8px;height:16px;margin:3px 0}
+.cb i{display:block;height:100%;border-radius:0 6px 6px 0;width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.cb span{font-size:.8rem;font-weight:700}
+.calc{background:var(--blue);color:#fff;border-radius:14px;padding:22px}
+.calc label{display:block;font-weight:700;margin-bottom:6px}
+.calc input[type=range]{width:100%;accent-color:var(--sun)}
+.big{font-size:clamp(2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.calc p{margin:8px 0 0}
+.spark{width:100%;height:auto;overflow:visible}
+.spark text{fill:var(--mut);font-size:12px;font-family:inherit}
+.note{margin-top:46px;font-size:.85rem;color:var(--mut);border-top:2px solid var(--ink);padding-top:12px}
+@media (max-width:520px){.row{grid-template-columns:70px 1fr 54px}}
+@media (prefers-reduced-motion:reduce){.bar{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Where does your <span>money</span> go?</h1>
+  <p class="lead">Real data from Morocco's HCP and the business press, up to November 2026. See how diesel prices climbed and what a full tank costs now.</p>
+
+  <h2>One tank of diesel: 575 MAD to 845 MAD</h2>
+  <p class="sub">A tank is 50 litres (price per litre &times; 50). Yellow bars mark the latest rises. Tap a bar for details.</p>
+  <div class="pump" id="pump" role="group" aria-label="Cost of a tank of diesel"></div>
+  <div class="detail" id="detail">Tap a bar to see the details.</div>
+
+  <h2>Inflation from 2020 to 2025</h2>
+  <p class="sub">Average annual consumer price index change (HCP). 2022 and 2023 were the expensive years.</p>
+  <svg class="spark" id="spark" viewBox="0 0 640 220" role="img" aria-label="Annual inflation in Morocco"></svg>
+
+  <h2>Food rose more than everything else</h2>
+  <p class="sub">Price rise since 2021, food versus non-food (HCP, 2022 to 2025). Tap a year for details.</p>
+  <div class="legend"><span><i style="background:var(--sun)"></i>Food</span><span><i style="background:var(--blue)"></i>Non-food</span></div>
+  <div id="cat"></div>
+  <div class="detail" id="catd">Food prices rose 26.9% in total over these four years, non-food 7.5%.</div>
+
+  <h2>What was your salary worth in 2020?</h2>
+  <p class="sub">Move the slider to see what salary in 2020 had the same buying power as yours today.</p>
+  <div class="calc">
+    <label for="sal">Your salary today: <b id="salv">5000</b> MAD</label>
+    <input id="sal" type="range" min="2500" max="20000" step="250" value="5000">
+    <div class="big" id="out"></div>
+    <p id="out2"></p>
+  </div>
+
+  <div class="tag" style="margin-top:34px"><b>Project by Salma El Mansoury</b> &middot; Junior data analyst<br>Data: HCP, Moroccan business press.</div>
+
+  <p class="note"><b>Sources and limits.</b> Annual inflation (HCP): 2020 +0.7%, 2021 +1.4%, 2022 +6.6%, 2023 +6.1%, 2024 +0.9%, 2025 +0.8%. From 2021 to 2025 prices rose +16.6% in total, and in the first six months of 2026 the index averaged +0.4% (HCP). Diesel prices come from Bladi.net, Le Site Info, Finances News Hebdo and LesMRE (1 November 2026) and vary by distributor (16.30 to 16.99 MAD). Food versus non-food annual changes (HCP): 2022 +11.0% / +3.9%, 2023 +12.5% / +1.7%, 2024 +0.8% / +1.2%, 2025 +0.8% / +0.5%; 2020 and 2021 not collected yet. Not yet included: prices of bread, oil and milk from official data.</p>
+</main>
+<script>
+const fuel=[
+ {d:"Feb",p:11.5,t:"Diesel price in Casablanca in February, before the 2026 rises."},
+ {d:"Jul",p:12.61,t:"Early July: diesel fell back to 12.61 MAD after several cuts. A tank cost 630.50 MAD."},
+ {d:"16 Jul",p:13.30,t:"16 July: +0.69 MAD per litre, and prices kept climbing."},
+ {d:"3 Aug",p:14.30,t:"Night of 2 to 3 August: +1 MAD per litre."},
+ {d:"1 Oct",p:16.10,t:"1 October: +0.80 MAD. Since July, +3.49 MAD per litre."},
+ {d:"1 Nov",p:16.90,t:"1 November: about 16.90 MAD (16.30 to 16.99 depending on the distributor), a record above the 2022 peak."}
+];
+const pump=document.getElementById('pump'),det=document.getElementById('detail');
+fuel.forEach((f,i)=>{
+  const plein=Math.round(f.p*50);
+  const c=document.createElement('button');c.className='col'+(i>=4?' hi':'');
+  c.innerHTML=`<b>${plein}</b><span class="fill" data-h="${f.p/17.5*100}%"></span><small>${f.d}</small>`;
+  c.onclick=()=>{det.innerHTML=`<b>${f.d} 2026</b>: ${f.p.toFixed(2)} MAD/litre = <b>${plein} MAD</b> per tank (50 L).<br>${f.t}`};
+  pump.appendChild(c);
+});
+requestAnimationFrame(()=>setTimeout(()=>document.querySelectorAll('.fill').forEach(b=>b.style.height=b.dataset.h),50));
+
+
+const cat=[{y:2022,f:11.0,n:3.9,t:"Food prices jumped 11%, while non-food rose 3.9%."},{y:2023,f:12.5,n:1.7,t:"The peak: food +12.5%, the biggest gap of the period (10.8 points)."},{y:2024,f:0.8,n:1.2,t:"Calm year. Non-food rose slightly more than food."},{y:2025,f:0.8,n:0.5,t:"Both stayed low, food +0.8% and non-food +0.5%."}];
+const cd=document.getElementById('cat'),cdt=document.getElementById('catd');
+cat.forEach(c=>{const b=document.createElement('button');b.className='crow';
+ b.innerHTML=`<b>${c.y}</b><span><span class="cb"><i style="background:var(--sun)" data-w="${c.f/12.5*80}%"></i><span>+${c.f}%</span></span><span class="cb"><i style="background:var(--blue)" data-w="${c.n/12.5*80}%"></i><span>+${c.n}%</span></span></span>`;
+ b.onclick=()=>{cdt.innerHTML=`<b>${c.y}</b>: ${c.t}`};cd.appendChild(b)});
+requestAnimationFrame(()=>setTimeout(()=>document.querySelectorAll('.cb i').forEach(i=>i.style.width=i.dataset.w),50));
+const infl=[[2020,0.7],[2021,1.4],[2022,6.6],[2023,6.1],[2024,0.9],[2025,0.8]];
+(function(){
+  const s=document.getElementById('spark'),W=640,H=220,L=36,B=28,T=14;
+  const xs=i=>L+i*(W-L-14)/(infl.length-1),ys=v=>H-B-v/7*(H-B-T);
+  let g='';
+  [0,2,4,6].forEach(v=>g+=`<line x1="${L}" x2="${W-8}" y1="${ys(v)}" y2="${ys(v)}" stroke="currentColor" opacity=".12"/><text x="0" y="${ys(v)+4}">${v}%</text>`);
+  const pts=infl.map((d,i)=>[xs(i),ys(d[1])]);
+  const path='M'+pts.map(p=>p.join(',')).join(' L');
+  g+=`<path d="${path} L${pts[pts.length-1][0]},${H-B} L${pts[0][0]},${H-B} Z" fill="var(--sun)" opacity=".25"/><path d="${path}" fill="none" stroke="var(--blue)" stroke-width="3.5" stroke-linejoin="round"/>`;
+  infl.forEach((d,i)=>{g+=`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="5" fill="var(--sun)" stroke="var(--ink)" stroke-width="2"/><text x="${pts[i][0]}" y="${H-8}" text-anchor="middle">${d[0]}</text>`;
+    g+=`<text x="${pts[i][0]}" y="${pts[i][1]-12}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${d[1]}%</text>`});
+  s.innerHTML=g;
+})();
+
+// 2021..2025 annual rates, then +0.4% (H1 2026 vs 2025 average)
+const cum=infl.slice(1).reduce((a,d)=>a*(1+d[1]/100),1)*1.004;
+const sal=document.getElementById('sal');
+function upd(){
+  const v=+sal.value;
+  document.getElementById('salv').textContent=v.toLocaleString('en-US');
+  const need=Math.round(v/cum/10)*10;
+  document.getElementById('out').textContent=need.toLocaleString('en-US')+' MAD';
+  document.getElementById('out2').textContent=`In 2020, ${need.toLocaleString('en-US')} MAD bought what ${v.toLocaleString('en-US')} MAD buys today. Cumulative inflation 2020 to 2026: +${(cum*100-100).toFixed(1)}%.`;
+}
+sal.oninput=upd;upd();
+</script>
+</body>
+</html>
